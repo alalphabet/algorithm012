@@ -1,0 +1,40 @@
+class Solution {
+  public boolean isValid(String s) {
+        Stack<Character> stack = new Stack<>();
+		if (s.equals(""))
+			return true;
+		for (int i = 0; i < s.length(); i++) {
+			char c = s.charAt(i);
+			if (c == '{') {
+				stack.push('{');
+			} else if (c == '[') {
+				stack.push('[');
+			} else if (c == '(') {
+				stack.push('(');
+			}
+
+			//no element filled in stack, but encounter ']','}',')' first
+			if (stack.isEmpty() && (c == ']' || c == '}' || c == ')'))
+				return false;
+
+			if (!stack.isEmpty()) {
+				if (c == '}') {
+					char a = stack.pop();
+					if (a != '{')
+						return false;
+				} else if (c == ']') {
+					char a = stack.pop();
+					if (a != '[')
+						return false;
+				} else if (c == ')') {
+					char a = stack.pop();
+					if (a != '(')
+						return false;
+				}
+			}
+		}
+		if (stack.isEmpty())
+			return true;
+		return false;
+    }
+}
